@@ -4,39 +4,39 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class TrendingGifsResponse(
+data class GifsResponse(
     @Json(name = "data")
-    val data: List<TrendingGifsDataResponse>,
+    val data: List<GifsDataResponse>,
 )
 
 @JsonClass(generateAdapter = true)
-data class TrendingGifsDataResponse(
+data class GifsDataResponse(
     @Json(name = "id")
     val id: String,
     @Json(name = "url")
     val url: String,
     @Json(name = "images")
-    val images: TrendingGifsImagesResponse,
+    val images: GifsImagesResponse,
     @Json(name = "title")
     val title: String
 )
 
 @JsonClass(generateAdapter = true)
-data class TrendingGifsImagesResponse(
+data class GifsImagesResponse(
     @Json(name = "original")
-    val original: TrendingGifsOriginalImageResponse,
+    val original: GifsOriginalImageResponse,
     @Json(name = "fixed_height_small")
-    val small: TrendingGifsSmallImageResponse
+    val small: GifsSmallImageResponse
 )
 
 @JsonClass(generateAdapter = true)
-data class TrendingGifsOriginalImageResponse(
+data class GifsOriginalImageResponse(
     @Json(name = "url")
     val url: String
 )
 
 @JsonClass(generateAdapter = true)
-data class TrendingGifsSmallImageResponse(
+data class GifsSmallImageResponse(
     @Json(name = "url")
     val url: String
 )

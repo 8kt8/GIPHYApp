@@ -9,32 +9,32 @@ import com.example.giphyapp.core.service.GiphyService
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TrendingGiphyRepository @Inject constructor(
+class SearchGiphyRepository @Inject constructor(
     private val giphyService: GiphyService,
     private val backendConfig: BackendConfig,
     private val trendingGifMapper: TrendingGifMapper,
     private val coreSchedulers: CoreSchedulers
 ){
 
-    private val trendingGifs: Subject<List<TrendingGif>> =
-        BehaviorSubject.create<List<TrendingGif>>().toSerialized()
+    private val searchResult: Subject<List<TrendingGif>> =
+        PublishSubject.create<List<TrendingGif>>().toSerialized()
 
     @WorkerThread
-    fun refresh(): Completable = giphyService.getTrending(backendConfig.apiKey)
+    fun search(query: String): Completable = giphyService.search(query, backendConfig.apiKey)
         .map(trendingGifMapper::map)
         .doAfterSuccess(::updateTrendingGifs)
         .subscribeOn(coreSchedulers.networkIO)
         .ignoreElement()
 
-    fun get(): Flowable<List<TrendingGif>> = trendingGifs.toFlowable(BackpressureStrategy.LATEST)
+    fun get(): Flowable<List<TrendingGif>> = searchResult.toFlowable(BackpressureStrategy.LATEST)
 
     private fun updateTrendingGifs(newItems: List<TrendingGif>){
-        trendingGifs.onNext(newItems)
+        searchResult.onNext(newItems)
     }
 }

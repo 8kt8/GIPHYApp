@@ -2,6 +2,7 @@ package com.example.giphyapp.gifGrid
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.giphyapp.R
@@ -23,10 +24,11 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
         super.onViewCreated(view, savedInstanceState)
         binding.adapter = adapter
         binding.viewModel = viewModel
+        binding.searchInput.addTextChangedListener(
+            afterTextChanged = { viewModel.searchGifs(it.toString()) }
+        )
         viewModel.refreshTrendingGifs()
-        viewModel.trendingGifs.observe(viewLifecycleOwner){
-            adapter.submitList(it)
-        }
+        viewModel.gifItems.observe(viewLifecycleOwner, adapter::submitList)
     }
 }
 

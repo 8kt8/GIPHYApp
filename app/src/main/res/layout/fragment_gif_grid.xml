@@ -29,17 +29,16 @@
         android:imeOptions="actionSearch|flagNoFullscreen"
         android:hint="@string/search_hint"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/searchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search"
-        app:layout_constraintBottom_toBottomOf="@+id/searchInput"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/design_default_color_primary"
+        app:layout_constraintTop_toBottomOf="@+id/searchInput" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -54,7 +53,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchInput"
+        app:layout_constraintTop_toBottomOf="@id/separator"
         app:spanCount="2"
         tools:listitem="@layout/item_gif" />
 
@@ -62,7 +61,7 @@
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:showIf="@{!viewModel.loading}"
+        app:showIf="@{viewModel.loading}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

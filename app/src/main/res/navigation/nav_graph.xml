@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/gifGridFragment"
-        android:name="com.example.giphyapp.gif.GifGridFragment"
+        android:name="com.example.giphyapp.gifGrid.GifGridFragment"
         android:label="GifGridFragment" />
 </navigation>

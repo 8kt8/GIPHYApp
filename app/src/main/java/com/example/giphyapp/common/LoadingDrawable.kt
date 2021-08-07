@@ -4,12 +4,10 @@ import android.animation.ValueAnimator
 import android.graphics.*
 import android.graphics.drawable.Drawable
 
-class LoadingDrawable(
-    private val shape: Shape
-) : Drawable(), ValueAnimator.AnimatorUpdateListener {
+class LoadingDrawable : Drawable(), ValueAnimator.AnimatorUpdateListener {
 
     private val paint = Paint().apply {
-        color = Color.RED
+        color = Color.MAGENTA
         isAntiAlias = true
         style = Paint.Style.FILL
     }
@@ -24,23 +22,11 @@ class LoadingDrawable(
         animator.start()
     }
 
-    override fun draw(p0: Canvas) {
-        when (shape) {
-            Shape.Circle ->
-                p0.drawCircle(bounds.width() / 2f, bounds.height() / 2f, currentSize, paint)
-            Shape.Rect ->
-                p0.drawRect(
-                    (bounds.width() - currentSize) / 2f,
-                    (bounds.height() - currentSize) / 2f,
-                    (bounds.width() + currentSize) / 2f,
-                    (bounds.height() + currentSize) / 2f,
-                    paint
-                )
-        }
+    override fun draw(canvas: Canvas) {
+        canvas.drawCircle(bounds.width() / 2f, bounds.height() / 2f, currentSize, paint)
     }
 
-    override fun setAlpha(p0: Int) {
-    }
+    override fun setAlpha(p0: Int) {}
 
     override fun getOpacity(): Int {
         return PixelFormat.TRANSPARENT
@@ -48,11 +34,6 @@ class LoadingDrawable(
 
     override fun setColorFilter(p0: ColorFilter?) {
         paint.colorFilter = p0
-    }
-
-    enum class Shape {
-        Rect,
-        Circle
     }
 
     override fun onAnimationUpdate(p0: ValueAnimator?) {

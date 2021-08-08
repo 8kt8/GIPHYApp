@@ -29,6 +29,7 @@
         android:ems="10"
         android:imeOptions="actionSearch|flagNoFullscreen"
         android:hint="@string/search_hint"
+        android:textColorHint="@color/black"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

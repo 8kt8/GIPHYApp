@@ -20,8 +20,9 @@ import com.example.giphyapp.R
 import com.example.giphyapp.common.binding.BindingListAdapter
 import com.example.giphyapp.databinding.ItemGifBinding
 
-class GiphyGridAdapter(onItemClickListener: (GridItemGif) -> Unit) :
+class GiphyGridAdapter(onItemClickListener: (GridItemGif, ItemGifBinding) -> Unit) :
     BindingListAdapter<GridItemGif, ItemGifBinding>(onItemClickListener) {
 
     override fun getLayoutId(viewType: Int): Int = R.layout.item_gif
+
 }

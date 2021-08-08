@@ -2,6 +2,8 @@ package com.example.giphyapp.common.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.giphyapp.common.ui.ListItem
+import com.example.giphyapp.common.utils.ifNotNullAs
 
 object RecyclerViewBinding {
 
@@ -12,4 +14,13 @@ object RecyclerViewBinding {
       stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
   }
+
+  @JvmStatic
+  @BindingAdapter("submitList")
+  fun bindSubmitList(view: RecyclerView, itemList: List<ListItem>?) {
+    view.adapter.ifNotNullAs<BindingListAdapter<ListItem, *>> { adapter ->
+      adapter.submitList(itemList)
+    }
+  }
+
 }

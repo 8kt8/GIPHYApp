@@ -1,7 +1,7 @@
 package com.example.giphyapp.core.repository
 
 import androidx.annotation.WorkerThread
-import com.example.giphyapp.core.model.TrendingGif
+import com.example.giphyapp.core.model.Gif
 import com.example.giphyapp.core.model.TrendingGifMapper
 import com.example.giphyapp.core.schedulers.CoreSchedulers
 import com.example.giphyapp.core.service.BackendConfig
@@ -22,8 +22,8 @@ class SearchGiphyRepository @Inject constructor(
     private val coreSchedulers: CoreSchedulers
 ){
 
-    private val searchResult: Subject<List<TrendingGif>> =
-        PublishSubject.create<List<TrendingGif>>().toSerialized()
+    private val searchResult: Subject<List<Gif>> =
+        PublishSubject.create<List<Gif>>().toSerialized()
 
     @WorkerThread
     fun search(query: String): Completable = giphyService.search(query, backendConfig.apiKey)
@@ -32,9 +32,9 @@ class SearchGiphyRepository @Inject constructor(
         .subscribeOn(coreSchedulers.networkIO)
         .ignoreElement()
 
-    fun get(): Flowable<List<TrendingGif>> = searchResult.toFlowable(BackpressureStrategy.LATEST)
+    fun get(): Flowable<List<Gif>> = searchResult.toFlowable(BackpressureStrategy.LATEST)
 
-    private fun updateTrendingGifs(newItems: List<TrendingGif>){
+    private fun updateTrendingGifs(newItems: List<Gif>){
         searchResult.onNext(newItems)
     }
 }

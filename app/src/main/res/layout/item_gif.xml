@@ -47,9 +47,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/name"/>
 
-<!--                app:paletteCard="@{cardView}"-->
-<!--                app:paletteImage="@{pokemon.imageUrl}"-->
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/name"
                     android:layout_width="match_parent"
@@ -72,5 +69,4 @@
         </com.google.android.material.card.MaterialCardView>
 
     </com.skydoves.transformationlayout.TransformationLayout>
-
 </layout>

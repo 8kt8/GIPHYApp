@@ -12,7 +12,11 @@ abstract class BaseViewModel: ViewModel(){
     val loading: LiveData<Boolean>
         get() = _loading
 
-    protected val compositeDisposable = CompositeDisposable()
+    private val _errorEvent: MutableLiveData<Throwable> = MutableLiveData()
+    val errorEvent: LiveData<Throwable>
+        get() = _errorEvent
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         compositeDisposable.clear()
@@ -24,4 +28,6 @@ abstract class BaseViewModel: ViewModel(){
     }
 
     fun setLoading(isLoading: Boolean) = _loading.postValue(isLoading)
+
+    fun triggerError(error: Throwable) = _errorEvent.postValue(error)
 }

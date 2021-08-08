@@ -12,6 +12,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/parentView"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="20dp"
-        app:gifUrl="@{viewModel.gifDetailsUiModel.girUrl}"
+        app:gifUrl="@{viewModel.gifDetailsUiModel.gifUrl}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,6 +63,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/source"
         tools:text="G - Level 1"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/goToGiphyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/goToGiphy"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rating"
+        tools:text="@string/goToGiphy"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/shareButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:text="@string/goToGiphy"
+        android:textColor="@color/black"
+        app:srcCompat="@drawable/ic_share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goToGiphyButton"
+        tools:text="@string/goToGiphy"/>
 
     <ProgressBar
         android:id="@+id/progressbar"

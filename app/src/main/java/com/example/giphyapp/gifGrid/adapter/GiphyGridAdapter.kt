@@ -20,10 +20,8 @@ import com.example.giphyapp.R
 import com.example.giphyapp.common.binding.BindingListAdapter
 import com.example.giphyapp.databinding.ItemGifBinding
 
-class GiphyGridAdapter : BindingListAdapter<GridItemGif, ItemGifBinding>() {
+class GiphyGridAdapter(onItemClickListener: (GridItemGif) -> Unit) :
+    BindingListAdapter<GridItemGif, ItemGifBinding>(onItemClickListener) {
 
-  override fun getLayoutId(viewType: Int): Int = R.layout.item_gif
-
-  override fun onBoundView(item: GridItemGif, binding: ItemGifBinding, position: Int) {}
-
+    override fun getLayoutId(viewType: Int): Int = R.layout.item_gif
 }

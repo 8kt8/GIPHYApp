@@ -9,7 +9,7 @@ object ImageViewBinding {
 
   @JvmStatic
   @BindingAdapter("gifUrl")
-  fun bindGifUrl(view: ImageView, gifUrl: String) {
+  fun bindGifUrl(view: ImageView, gifUrl: String?) {
     Glide.with(view.context)
       .asGif()
       .load(gifUrl)

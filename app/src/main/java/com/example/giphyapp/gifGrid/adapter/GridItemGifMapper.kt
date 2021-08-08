@@ -1,13 +1,13 @@
 package com.example.giphyapp.gifGrid.adapter
 
-import com.example.giphyapp.core.model.TrendingGif
+import com.example.giphyapp.core.model.Gif
 import javax.inject.Inject
 
 class GridItemGifMapper @Inject constructor(){
 
-    fun map(trendingGifs: List<TrendingGif>): List<GridItemGif> = trendingGifs.map(::map)
+    fun map(gifs: List<Gif>): List<GridItemGif> = gifs.map(::map)
 
-    private fun map(trendingGif: TrendingGif): GridItemGif = with(trendingGif){
-        GridItemGif(id.hashCode(), smallUrl, title)
+    private fun map(gif: Gif): GridItemGif = with(gif){
+        GridItemGif(id.hashCode(), id, smallUrl, title)
     }
 }

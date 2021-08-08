@@ -2,7 +2,6 @@
     <string name="app_name">GIPHYApp</string>
 
     <string name="search_hint">Search GIPHY</string>
-    <string name="search">Search</string>
-
+    <string name="goToGiphy"> GO TO GIPHY</string>
 
 </resources>

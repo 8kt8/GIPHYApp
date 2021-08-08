@@ -1,7 +1,10 @@
 package com.example.giphyapp.gifDetails
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -9,6 +12,9 @@ import com.example.giphyapp.R
 import com.example.giphyapp.common.viewBinding
 import com.example.giphyapp.databinding.FragmentGifDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
+
+
+
 
 @AndroidEntryPoint
 class GifDetailsFragment: Fragment(R.layout.fragment_gif_details){
@@ -24,7 +30,30 @@ class GifDetailsFragment: Fragment(R.layout.fragment_gif_details){
         with(binding){
             lifecycleOwner = viewLifecycleOwner
             viewModel = gifDetailsViewModel
+            goToGiphyButton.setOnClickListener { openGiphyGoogleTab() }
+            shareButton.setOnClickListener { shareGifUrl() }
         }
         gifDetailsViewModel.refreshById(args.id)
     }
+
+    private fun openGiphyGoogleTab(){
+        getUrl()?.let {
+            val uri = Uri.parse(it)
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(requireContext(), uri)
+        }
+    }
+
+    private fun shareGifUrl(){
+        getUrl()?.let { url ->
+            ShareCompat.IntentBuilder(requireContext())
+                .setType("text/plain")
+                .setChooserTitle("Share GIPHY URL")
+                .setText(url)
+                .startChooser()
+        }
+    }
+
+    private fun getUrl() = gifDetailsViewModel.gifDetailsUiModel.value?.gifUrl
 }

@@ -10,7 +10,7 @@ class GifDetailsUiModelMapper @Inject constructor() {
     fun map(gif: Gif) = with(gif){
         GifDetailsUiModel(
             url = pageUrl,
-            girUrl = originalUrl,
+            gifUrl = originalUrl,
             title = getTitle(title),
             source = getSource(source),
             rating = getGifRatingDescription(ratingCode)

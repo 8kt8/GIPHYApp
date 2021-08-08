@@ -33,6 +33,7 @@ class GifDetailsViewModel @Inject constructor(
                     Logger.d("refresh gif by id :$id success")
                 }, {
                     Logger.e("refresh gif by id :$id ${it.localizedMessage}")
+                    triggerError(it)
                 }).remember()
         }
     }

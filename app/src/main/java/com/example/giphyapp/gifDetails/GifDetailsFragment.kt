@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.giphyapp.R
+import com.example.giphyapp.common.utils.showToastLong
 import com.example.giphyapp.common.viewBinding
 import com.example.giphyapp.databinding.FragmentGifDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +40,7 @@ class GifDetailsFragment: Fragment(R.layout.fragment_gif_details){
             shareButton.setOnClickListener { shareGifUrl() }
         }
         gifDetailsViewModel.refreshById(args.id)
+        observeApiError()
     }
 
     private fun openGiphyGoogleTab(){
@@ -57,6 +59,14 @@ class GifDetailsFragment: Fragment(R.layout.fragment_gif_details){
                 .setChooserTitle("Share GIPHY URL")
                 .setText(url)
                 .startChooser()
+        }
+    }
+
+    private fun observeApiError(){
+        gifDetailsViewModel.errorEvent.observe(viewLifecycleOwner){
+            if(gifDetailsViewModel.gifDetailsUiModel.value == null){
+                showToastLong(it.localizedMessage ?: "Api error")
+            }
         }
     }
 

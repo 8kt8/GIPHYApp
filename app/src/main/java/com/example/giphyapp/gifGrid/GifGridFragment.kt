@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.giphyapp.R
+import com.example.giphyapp.common.utils.showToastLong
 import com.example.giphyapp.common.viewBinding
 import com.example.giphyapp.databinding.FragmentGifGridBinding
 import com.example.giphyapp.databinding.ItemGifBinding
@@ -38,6 +39,7 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
             )
         }
         refreshTrendingGifsIfNoSearchInput()
+        observeApiError()
     }
 
     private fun refreshTrendingGifsIfNoSearchInput(){
@@ -53,5 +55,12 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
         val direction = GifGridFragmentDirections.actionGifGridFragmentToGifDetailsFragment(gridItemGif.gifId)
         findNavController().navigate(direction, extras)
     }
-}
 
+    private fun observeApiError(){
+        gifGridViewModel.errorEvent.observe(viewLifecycleOwner){
+            if(gridAdapter.itemCount == 0){
+                showToastLong(it.localizedMessage ?: "Api error")
+            }
+        }
+    }
+}

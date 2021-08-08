@@ -18,7 +18,6 @@ class GifGridViewModel @Inject constructor(
     private val searchGifUseCase: SearchGifUseCase
 ) : BaseViewModel() {
 
-
     fun refreshTrendingGifs() {
         setLoading(true)
         refreshTrendingGifsUseCase.refresh()
@@ -27,6 +26,7 @@ class GifGridViewModel @Inject constructor(
                 Logger.d("refreshTrendingGifs success")
             }, {
                 Logger.e("refreshTrendingGifs error ${it.localizedMessage}")
+                triggerError(it)
             }).remember()
     }
 
@@ -39,9 +39,9 @@ class GifGridViewModel @Inject constructor(
                 .doFinally { setLoading(false) }
                 .subscribe({
                     Logger.d("searchGifUseCase success")
-
                 }, {
                     Logger.e("searchGifUseCase error ${it.localizedMessage}")
+                    triggerError(it)
                 }).remember()
         }
     }

@@ -2,13 +2,16 @@ package com.example.giphyapp.gifGrid
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.doOnPreDraw
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.giphyapp.R
 import com.example.giphyapp.common.viewBinding
 import com.example.giphyapp.databinding.FragmentGifGridBinding
+import com.example.giphyapp.databinding.ItemGifBinding
 import com.example.giphyapp.gifGrid.adapter.GiphyGridAdapter
 import com.example.giphyapp.gifGrid.adapter.GridItemGif
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,10 +27,12 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         with(binding) {
             lifecycleOwner = viewLifecycleOwner
             adapter = gridAdapter
             viewModel = gifGridViewModel
+            recyclerView.doOnPreDraw {  startPostponedEnterTransition() }
             searchInput.addTextChangedListener(
                 afterTextChanged = { gifGridViewModel.searchGifs(it.toString()) }
             )
@@ -41,9 +46,12 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
         }
     }
 
-    private fun onItemClicked(gridItemGif: GridItemGif){
+    private fun onItemClicked(gridItemGif: GridItemGif, binding: ItemGifBinding){
+        val extras = FragmentNavigatorExtras(
+            binding.image to gridItemGif.gifId
+        )
         val direction = GifGridFragmentDirections.actionGifGridFragmentToGifDetailsFragment(gridItemGif.gifId)
-        findNavController().navigate(direction)
+        findNavController().navigate(direction, extras)
     }
 }
 

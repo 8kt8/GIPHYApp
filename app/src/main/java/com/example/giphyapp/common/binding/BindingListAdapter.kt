@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.giphyapp.common.ui.ListItem
 
 abstract class BindingListAdapter<Item: ListItem, Binding : ViewDataBinding>(
-    val onItemClickListener: (Item) -> Unit = {},
+    val onItemClickListener: (Item, Binding) -> Unit = { _,_ -> },
     diffUtil: DiffUtil.ItemCallback<Item> = DefaultDiffCallback()
 ) : ListAdapter<Item, BindingViewHolder<Item, Binding>>(diffUtil) {
 
@@ -33,7 +33,7 @@ abstract class BindingListAdapter<Item: ListItem, Binding : ViewDataBinding>(
     }
 
     open fun onBoundView(item: Item, binding: Binding, position: Int) {
-        binding.root.setOnClickListener{ onItemClickListener(item) }
+        binding.root.setOnClickListener{ onItemClickListener(item, binding) }
     }
 
     override fun getItemViewType(position: Int) = getItem(position).type

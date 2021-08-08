@@ -2,6 +2,7 @@ package com.example.giphyapp.gifDetails
 
 import android.net.Uri
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
@@ -13,9 +14,6 @@ import com.example.giphyapp.common.viewBinding
 import com.example.giphyapp.databinding.FragmentGifDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
-
-
 @AndroidEntryPoint
 class GifDetailsFragment: Fragment(R.layout.fragment_gif_details){
 
@@ -25,11 +23,18 @@ class GifDetailsFragment: Fragment(R.layout.fragment_gif_details){
 
     private val binding: FragmentGifDetailsBinding by viewBinding(FragmentGifDetailsBinding::bind)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementReturnTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
             lifecycleOwner = viewLifecycleOwner
             viewModel = gifDetailsViewModel
+            image.transitionName = args.id
             goToGiphyButton.setOnClickListener { openGiphyGoogleTab() }
             shareButton.setOnClickListener { shareGifUrl() }
         }

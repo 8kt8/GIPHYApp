@@ -41,3 +41,7 @@ Makes the code much more pleasant to work with!
 * Readable and intuitive
 * Easy to reason about and modify
 * Productive and less stressful
+
+### Example Unit tests :
+* SearchGiphyRepositoryTest
+* GifGridViewModelTest

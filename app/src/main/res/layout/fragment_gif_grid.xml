@@ -20,6 +20,26 @@
     android:background="@color/white"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/design_default_color_primary"
+        app:title="@string/app_name"
+        app:theme="@style/ToolBarStyle"
+        app:popupTheme="@style/ToolBarStyle"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/sort_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/ic_sort" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/searchInput"
         android:layout_width="0dp"
@@ -33,7 +53,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <View
         android:id="@+id/separator"

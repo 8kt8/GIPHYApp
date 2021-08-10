@@ -17,6 +17,7 @@ import com.example.giphyapp.gifGrid.adapter.GiphyGridAdapter
 import com.example.giphyapp.gifGrid.adapter.GridItemGif
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
 
@@ -37,6 +38,7 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
             searchInput.addTextChangedListener(
                 afterTextChanged = { gifGridViewModel.searchGifs(it.toString()) }
             )
+            sortButton.setOnClickListener { gridAdapter.sort() }
         }
         refreshTrendingGifsIfNoSearchInput()
         observeApiError()
@@ -63,4 +65,5 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
             }
         }
     }
+
 }

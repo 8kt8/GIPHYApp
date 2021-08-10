@@ -16,6 +16,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/design_default_color_primary"
+        app:title="@string/app_name"
+        app:theme="@style/ToolBarStyle"
+        app:popupTheme="@style/ToolBarStyle"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/shareButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/ic_share" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
@@ -24,7 +44,7 @@
         app:gifUrl="@{viewModel.gifDetailsUiModel.gifUrl}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
@@ -74,19 +94,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating"
-        tools:text="@string/goToGiphy"/>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/shareButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:text="@string/goToGiphy"
-        android:textColor="@color/black"
-        app:srcCompat="@drawable/ic_share"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goToGiphyButton"
         tools:text="@string/goToGiphy"/>
 
     <ProgressBar

@@ -23,6 +23,23 @@ import com.example.giphyapp.databinding.ItemGifBinding
 class GiphyGridAdapter(onItemClickListener: (GridItemGif, ItemGifBinding) -> Unit) :
     BindingListAdapter<GridItemGif, ItemGifBinding>(onItemClickListener) {
 
+    private var sortedAscending = false
+
     override fun getLayoutId(viewType: Int): Int = R.layout.item_gif
+
+    fun sort(){
+        if(sortedAscending) sortDescending() else sortAscending()
+        sortedAscending = sortedAscending.not()
+    }
+
+    private fun sortAscending(){
+        val sortedList = currentList.toMutableList().apply { sortBy { it.title } }
+        submitList(sortedList)
+    }
+
+    private fun sortDescending(){
+        val sortedList = currentList.toMutableList().apply { sortByDescending { it.title } }
+        submitList(sortedList)
+    }
 
 }

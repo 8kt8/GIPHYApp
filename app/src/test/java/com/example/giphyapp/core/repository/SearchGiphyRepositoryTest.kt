@@ -12,7 +12,7 @@ import io.mockk.mockk
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class SearchGiphyRepositoryTest {
+internal class SearchGiphyRepositoryTest {
 
     private val giphyService: GiphyService = mockk()
     private val backendConfig: BackendConfig = mockk()

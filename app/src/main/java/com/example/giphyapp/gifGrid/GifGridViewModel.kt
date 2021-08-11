@@ -2,6 +2,8 @@ package com.example.giphyapp.gifGrid
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams.fromPublisher
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
 import com.example.giphyapp.core.common.BaseViewModel
 import com.example.giphyapp.core.repository.useCase.RefreshTrendingGifsUseCase
 import com.example.giphyapp.core.repository.useCase.SearchGifUseCase
@@ -14,9 +16,11 @@ import javax.inject.Inject
 @HiltViewModel
 class GifGridViewModel @Inject constructor(
     private val refreshTrendingGifsUseCase: RefreshTrendingGifsUseCase,
-    getGifsItemsUseCase: GetGifsItemsUseCase,
+    private val getGifsItemsUseCase: GetGifsItemsUseCase,
     private val searchGifUseCase: SearchGifUseCase
 ) : BaseViewModel() {
+
+    private val itemAreSortedAscending: MutableLiveData<Boolean> = MutableLiveData(true)
 
     fun refreshTrendingGifs() {
         setLoading(true)
@@ -46,5 +50,14 @@ class GifGridViewModel @Inject constructor(
         }
     }
 
-    val gifItems: LiveData<List<GridItemGif>> = fromPublisher(getGifsItemsUseCase.get())
+    fun sort(){
+        itemAreSortedAscending.value = itemAreSortedAscending.value?.not() ?: false
+    }
+
+    val gifItems: LiveData<List<GridItemGif>> = itemAreSortedAscending.switchMap {
+        when {
+            it -> fromPublisher(getGifsItemsUseCase.get())
+            else -> fromPublisher(getGifsItemsUseCase.getSortedDescending())
+        }
+    }
 }

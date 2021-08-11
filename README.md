@@ -45,3 +45,4 @@ Makes the code much more pleasant to work with!
 ### Example Unit tests :
 * SearchGiphyRepositoryTest
 * GifGridViewModelTest
+* GetGifsItemsUseCaseTest

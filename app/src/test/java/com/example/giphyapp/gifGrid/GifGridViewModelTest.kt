@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.core.Flowable
 import org.junit.Rule
 import org.junit.Test
 
-class GifGridViewModelTest{
+internal class GifGridViewModelTest{
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -34,10 +34,7 @@ class GifGridViewModelTest{
     private val gridItemGif1: GridItemGif = mockk()
     private val gridItemGif2: GridItemGif = mockk()
     private val items = listOf(gridItemGif1, gridItemGif2)
-
-    init {
-        every { getGifsItemsUseCase.get() } returns Flowable.just(items)
-    }
+    private val itemsSortedDescending = listOf(gridItemGif2, gridItemGif1)
 
     @Test
     fun refreshTrendingGifs() {
@@ -79,6 +76,18 @@ class GifGridViewModelTest{
 
     @Test
     fun getGifItems() {
+        every { getGifsItemsUseCase.get() } returns Flowable.just(items)
+
         sut.gifItems.test().assertValue(items)
+    }
+
+    @Test
+    fun sort() {
+        every { getGifsItemsUseCase.get() } returns Flowable.just(items)
+        every { getGifsItemsUseCase.getSortedDescending() } returns Flowable.just(itemsSortedDescending)
+
+        val observer = sut.gifItems.test()
+        sut.sort()
+        observer.assertValueHistory(items, itemsSortedDescending)
     }
 }

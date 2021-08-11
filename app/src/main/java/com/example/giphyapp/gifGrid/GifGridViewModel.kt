@@ -60,10 +60,13 @@ class GifGridViewModel @Inject constructor(
         itemAreSortedAscending.value = itemAreSortedAscending.value?.not() ?: false
     }
 
+    private val itemsSortedAscending = fromPublisher(getGifsItemsUseCase.get())
+    private val itemsSortedDescending = fromPublisher(getGifsItemsUseCase.getSortedDescending())
+
     val gifItems: LiveData<List<GridItemGif>> = itemAreSortedAscending.switchMap {
         when {
-            it -> fromPublisher(getGifsItemsUseCase.get())
-            else -> fromPublisher(getGifsItemsUseCase.getSortedDescending())
+            it -> itemsSortedAscending
+            else -> itemsSortedDescending
         }
     }
 }

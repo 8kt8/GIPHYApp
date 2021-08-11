@@ -20,10 +20,6 @@ import com.example.giphyapp.gifGrid.adapter.GiphyGridAdapter
 import com.example.giphyapp.gifGrid.adapter.GridItemGif
 import dagger.hilt.android.AndroidEntryPoint
 
-
-
-
-
 @AndroidEntryPoint
 class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
 
@@ -96,5 +92,4 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
         val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.searchInput.windowToken, 0)
     }
-
 }

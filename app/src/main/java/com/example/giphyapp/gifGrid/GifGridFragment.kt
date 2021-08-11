@@ -38,7 +38,7 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
             searchInput.addTextChangedListener(
                 afterTextChanged = { gifGridViewModel.searchGifs(it.toString()) }
             )
-            sortButton.setOnClickListener { gridAdapter.sort() }
+            sortButton.setOnClickListener { gifGridViewModel.sort() }
         }
         refreshTrendingGifsIfNoSearchInput()
         observeApiError()

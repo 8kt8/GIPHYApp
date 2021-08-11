@@ -9,7 +9,7 @@ import com.example.giphyapp.core.service.GiphyService
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,7 +23,7 @@ class TrendingGiphyRepository @Inject constructor(
 ){
 
     private val gifs: Subject<List<Gif>> =
-        BehaviorSubject.create<List<Gif>>().toSerialized()
+        PublishSubject.create<List<Gif>>().toSerialized()
 
     @WorkerThread
     fun refresh(): Completable = giphyService.getTrending(backendConfig.apiKey)

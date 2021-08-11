@@ -19,8 +19,16 @@ internal class GifGridViewModelTest{
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    private val gridItemGif1: GridItemGif = mockk()
+    private val gridItemGif2: GridItemGif = mockk()
+    private val items = listOf(gridItemGif1, gridItemGif2)
+    private val itemsSortedDescending = listOf(gridItemGif2, gridItemGif1)
+
     private val refreshTrendingGifsUseCase: RefreshTrendingGifsUseCase = mockk()
-    private val getGifsItemsUseCase: GetGifsItemsUseCase = mockk()
+    private val getGifsItemsUseCase: GetGifsItemsUseCase = mockk{
+        every { get() } returns Flowable.just(items)
+        every { getSortedDescending() } returns Flowable.just(itemsSortedDescending)
+    }
     private val searchGifUseCase: SearchGifUseCase = mockk()
 
     private val sut by lazy {
@@ -30,11 +38,6 @@ internal class GifGridViewModelTest{
             searchGifUseCase = searchGifUseCase
         )
     }
-
-    private val gridItemGif1: GridItemGif = mockk()
-    private val gridItemGif2: GridItemGif = mockk()
-    private val items = listOf(gridItemGif1, gridItemGif2)
-    private val itemsSortedDescending = listOf(gridItemGif2, gridItemGif1)
 
     @Test
     fun refreshTrendingGifs() {
@@ -85,9 +88,6 @@ internal class GifGridViewModelTest{
 
     @Test
     fun sort() {
-        every { getGifsItemsUseCase.get() } returns Flowable.just(items)
-        every { getGifsItemsUseCase.getSortedDescending() } returns Flowable.just(itemsSortedDescending)
-
         val observer = sut.gifItems.test()
         sut.sort()
         observer.assertValueHistory(items, itemsSortedDescending)

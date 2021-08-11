@@ -52,6 +52,7 @@ internal class GifGridViewModelTest{
         val observer = sut.loading.test()
 
         sut.refreshTrendingGifs()
+        assert(sut.query == "")
         observer.assertValueHistory(false, true ,false)
     }
 
@@ -61,6 +62,7 @@ internal class GifGridViewModelTest{
         val observer = sut.loading.test()
 
         sut.searchGifs("query")
+        assert(sut.query == "query")
         observer.assertValueHistory(false, true ,false)
         verify { searchGifUseCase.search("query") }
     }

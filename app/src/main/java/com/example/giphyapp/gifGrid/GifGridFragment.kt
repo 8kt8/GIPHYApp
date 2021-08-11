@@ -1,7 +1,10 @@
 package com.example.giphyapp.gifGrid
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.doOnPreDraw
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -18,6 +21,9 @@ import com.example.giphyapp.gifGrid.adapter.GridItemGif
 import dagger.hilt.android.AndroidEntryPoint
 
 
+
+
+
 @AndroidEntryPoint
 class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
 
@@ -30,22 +36,42 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
-        with(binding) {
-            lifecycleOwner = viewLifecycleOwner
-            adapter = gridAdapter
-            viewModel = gifGridViewModel
-            recyclerView.doOnPreDraw {  startPostponedEnterTransition() }
-            searchInput.addTextChangedListener(
-                afterTextChanged = { gifGridViewModel.searchGifs(it.toString()) }
-            )
-            sortButton.setOnClickListener { gifGridViewModel.sort() }
-        }
+        onBoundView()
         refreshTrendingGifsIfNoSearchInput()
         observeApiError()
     }
 
+    private fun onBoundView() = with(binding){
+        with(binding) {
+            lifecycleOwner = viewLifecycleOwner
+            adapter = gridAdapter
+            viewModel = gifGridViewModel
+            sortButton.setOnClickListener { gifGridViewModel.sort() }
+            onBoundSearchInput()
+            onBoundRecyclerView()
+        }
+    }
+
+    private fun onBoundSearchInput() = with(binding.searchInput){
+            setText(gifGridViewModel.query)
+            addTextChangedListener(afterTextChanged = {
+                if(it.toString() != gifGridViewModel.query){
+                    gifGridViewModel.searchGifs(it.toString())
+                }
+            })
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun onBoundRecyclerView() = with(binding.recyclerView) {
+        doOnPreDraw {  startPostponedEnterTransition() }
+        setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
+    }
+
     private fun refreshTrendingGifsIfNoSearchInput(){
-        if(binding.searchInput.text.isNullOrBlank()){
+        if(gifGridViewModel.query.isBlank()){
             gifGridViewModel.refreshTrendingGifs()
         }
     }
@@ -64,6 +90,11 @@ class GifGridFragment: Fragment(R.layout.fragment_gif_grid){
                 showToastLong(it.localizedMessage ?: "Api error")
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.searchInput.windowToken, 0)
     }
 
 }

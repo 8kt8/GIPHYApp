@@ -20,9 +20,14 @@ class GifGridViewModel @Inject constructor(
     private val searchGifUseCase: SearchGifUseCase
 ) : BaseViewModel() {
 
+    private var _query = ""
+    val query
+        get() = _query
+
     private val itemAreSortedAscending: MutableLiveData<Boolean> = MutableLiveData(true)
 
     fun refreshTrendingGifs() {
+        _query = ""
         setLoading(true)
         refreshTrendingGifsUseCase.refresh()
             .doFinally { setLoading(false) }
@@ -35,6 +40,7 @@ class GifGridViewModel @Inject constructor(
     }
 
     fun searchGifs(query: String) {
+        _query = query
         if(query.isBlank()){
             refreshTrendingGifs()
         } else {
